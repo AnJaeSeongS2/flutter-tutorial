@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hello_world/helper/loginBackground.dart';
 
 class AuthPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -14,34 +15,19 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Container(
-            color: Colors.white,
+          CustomPaint(
+            size: size,
+            painter: LoginBackground(),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                width: 200,
-                height: 200,
-                color: Colors.blue,
-              ),
+              _logoImage(),
               Stack(
                 children: [
                   _inputForm(size),
-                  Positioned(
-                    left: size.width * 0.15,
-                    right: size.width * 0.15,
-                    bottom: 0,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      color: Colors.blue,
-                      onPressed: () {},
-                      child: Text("Login"),
-                    ),
-                  ),
+                  _loginButton(size),
                 ],
               ),
               Container(
@@ -58,61 +44,98 @@ class AuthPage extends StatelessWidget {
     );
   }
 
-  Widget _inputForm(Size size) {
-    return Padding(
-      padding: EdgeInsets.all(size.width * 0.05),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        elevation: 6,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12,
-            right: 12,
-            top: 12,
-            bottom: 32,
+  Widget _inputForm(Size size) => Padding(
+        padding: EdgeInsets.all(size.width * 0.05),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
           ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.account_circle),
-                    labelText: "Email",
+          elevation: 6,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 12,
+              right: 12,
+              top: 12,
+              bottom: 32,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.account_circle),
+                      labelText: "Email",
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please input correct Email.";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please input correct Email.";
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.vpn_key),
-                    labelText: "Password",
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.vpn_key),
+                      labelText: "Password",
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please input correct password.";
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please input correct password.";
-                    }
-                    return null;
-                  },
-                ),
-                Container(
-                  height: 8,
-                ),
-                Text("Forget Password"),
-              ],
+                  Container(
+                    height: 8,
+                  ),
+                  Text("Forget Password"),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
+
+  Widget _loginButton(Size size) => Positioned(
+        left: size.width * 0.15,
+        right: size.width * 0.15,
+        bottom: 0,
+        child: SizedBox(
+          height: 40,
+          child: RaisedButton(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            color: Colors.blue,
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                print("login button pressed with valid inputs!!");
+                print(_passwordController.text.toString());
+              }
+            },
+            child: Text(
+              "Login",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ),
+        ),
+      );
+
+  Widget _logoImage() => Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50, left: 24, right: 24),
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: CircleAvatar(
+              backgroundImage: NetworkImage("https://picsum.photos/200"),
+              // image: "http://tgwing.kr/images/logo.png"),
+            ),
+          ),
+        ),
+      );
 }

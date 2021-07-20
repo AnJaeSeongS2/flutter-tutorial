@@ -18,9 +18,14 @@ samples, guidance on mobile development, and a full API reference.
 ## 빌드후 home 화면 예시
 | android | ios | web |
 |-------|-------|-------|
-|[android](./doc/image/android-home.png)|[ios-home](./doc/image/ios-home.png)|none|
+|[android](docs/images/android-home.png)|[ios-home](docs/images/ios-home.png)|none|
 
 ## 튜토리얼 중 화면 20210720
 | android | ios | web |
 |-------|-------|-------|
-|[auth-page](./doc/image/auth-page-20210720.png)|none|none|
+|[auth-page](docs/images/auth-page-20210720.png)|none|none|
+
+## 튜토리얼 중 화면 20210721
+| android | ios | web |
+|-------|-------|-------|
+|[auth-page](docs/images/auth-page-20210721.png)|none|none|
