@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "676510590267",
+    "project_id": "fir-flutter-tutorial-b2f4c",
+    "storage_bucket": "fir-flutter-tutorial-b2f4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676510590267:android:e866a83f1536e5e68f831e",
+        "android_client_info": {
+          "package_name": "com.sonan.hello_world"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676510590267-6913mjb4g261cvdbib5h72g2h2vq2e9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDrS-nsL75HVciHi3LUAx26S82LIWs2MI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676510590267-6913mjb4g261cvdbib5h72g2h2vq2e9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

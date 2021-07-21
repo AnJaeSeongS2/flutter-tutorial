@@ -29,3 +29,10 @@ samples, guidance on mobile development, and a full API reference.
 | android | ios | web |
 |-------|-------|-------|
 |[auth-page](docs/images/auth-page-20210721.png)|none|none|
+
+## 튜토리얼 중 화면 20210721-야간
+### android
+
+| join | login | main |
+|-------|-------|-------|
+|[auth-page-join](docs/images/20210721/auth-page-join.png)|[auth-page-login](docs/images/20210721/auth-page-login.png)|[main-page](docs/images/20210721/main-page.png)|
