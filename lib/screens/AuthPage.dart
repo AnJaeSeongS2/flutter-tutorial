@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/helper/loginBackground.dart';
+import 'package:hello_world/data/JoinOrLogin.dart';
+import 'package:hello_world/helper/AuthPageBackground.dart';
+import 'package:provider/provider.dart';
 
 class AuthPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -17,7 +19,8 @@ class AuthPage extends StatelessWidget {
         children: [
           CustomPaint(
             size: size,
-            painter: LoginBackground(),
+            painter: LoginBackground(
+                isJoin: Provider.of<JoinOrLogin>(context).isJoin),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -27,13 +30,25 @@ class AuthPage extends StatelessWidget {
               Stack(
                 children: [
                   _inputForm(size),
-                  _loginButton(size),
+                  _autoButton(size),
                 ],
               ),
               Container(
                 height: size.height * 0.1,
               ),
-              Text("Don't Have an Account? Create One."),
+              Consumer<JoinOrLogin>(
+                builder: (context, joinOrLogin, child) => GestureDetector(
+                  onTap: () {
+                    Provider.of<JoinOrLogin>(context, listen: false).toggle();
+                  },
+                  child: Text(
+                    joinOrLogin.isJoin ? "Already Have an Account? Sign in." : "Don't Have an Account? Create One.",
+                    style: TextStyle(
+                      color: joinOrLogin.isJoin ? Colors.red : Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
               Container(
                 height: size.height * 0.05,
               ),
@@ -93,7 +108,12 @@ class AuthPage extends StatelessWidget {
                   Container(
                     height: 8,
                   ),
-                  Text("Forget Password"),
+                  Consumer<JoinOrLogin>(
+                    builder: (context, value, child) => Opacity(
+                        opacity: value.isJoin ? 0 : 1,
+                        child: Text("Forgot Password"),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -101,27 +121,29 @@ class AuthPage extends StatelessWidget {
         ),
       );
 
-  Widget _loginButton(Size size) => Positioned(
+  Widget _autoButton(Size size) => Positioned(
         left: size.width * 0.15,
         right: size.width * 0.15,
         bottom: 0,
         child: SizedBox(
           height: 40,
-          child: RaisedButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            color: Colors.blue,
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                print("login button pressed with valid inputs!!");
-                print(_passwordController.text.toString());
-              }
-            },
-            child: Text(
-              "Login",
-              style: TextStyle(fontSize: 20, color: Colors.white),
-            ),
+          child: Consumer<JoinOrLogin>(
+            builder: (context, joinOrLogin, child) => RaisedButton(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              color: joinOrLogin.isJoin ? Colors.red : Colors.blue,
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  print("login button pressed with valid inputs!!");
+                  print(_passwordController.text.toString());
+                }
+              },
+              child: Text(
+                joinOrLogin.isJoin ? "Join" : "Login",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            )
           ),
         ),
       );
@@ -132,7 +154,7 @@ class AuthPage extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.contain,
             child: CircleAvatar(
-              backgroundImage: NetworkImage("https://picsum.photos/200"),
+              backgroundImage: AssetImage("assets/login.gif"),
               // image: "http://tgwing.kr/images/logo.png"),
             ),
           ),
