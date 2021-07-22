@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world/data/JoinOrLogin.dart';
 import 'package:hello_world/helper/AuthPageBackground.dart';
+import 'package:hello_world/screens/ForgetPassword.dart';
 import 'package:provider/provider.dart';
 
 import 'MainPage.dart';
@@ -116,7 +117,10 @@ class AuthPage extends StatelessWidget {
                   Consumer<JoinOrLogin>(
                     builder: (context, value, child) => Opacity(
                       opacity: value.isJoin ? 0 : 1,
-                      child: Text("Forgot Password"),
+                      child: GestureDetector(
+                        onTap: value.isJoin ? null : () => _goToForgetPassword(context),
+                        child: Text("Forgot Password?"),
+                      ),
                     ),
                   ),
                 ],
@@ -125,6 +129,15 @@ class AuthPage extends StatelessWidget {
           ),
         ),
       );
+
+  _goToForgetPassword(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ForgetPassword(),
+      ),
+    );
+  }
 
   Widget _authButton(Size size) => Positioned(
         left: size.width * 0.15,
